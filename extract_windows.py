@@ -1,6 +1,8 @@
 import argparse
 import math
 import numpy as np
+import glob
+import os
 
 from collections import OrderedDict
 from scipy import stats
@@ -122,6 +124,7 @@ def main():
     window_size_sec = args.w
     overlap = args.overlap
     input_files = args.input_files
+    input_files = glob.glob("data_jalan/m*.csv")
     output_dir = args.output_dir.strip('/') + '/'
     delimiter = args.delimiter
 
@@ -132,11 +135,11 @@ def main():
 
     for fname in input_files:
         short_name = fname.split('/')[-1]
-        print 'processing ', short_name
+        print('processing ', short_name)
         condition_emotion = np.genfromtxt(fname, skip_header=1, delimiter=delimiter, usecols=(0,1))
-        emotions = map(int, condition_emotion[:,1].tolist())
+        emotions = list(map(int, condition_emotion[:,1].tolist()))
 
-        data = np.genfromtxt(fname, skip_header=1, delimiter=delimiter, usecols=range(2, 9))
+        data = np.genfromtxt(fname, skip_header=1, delimiter=delimiter, usecols=list(range(2, 9)))
 
         # get emotions from second column
         emotion_ids = list(OrderedDict.fromkeys(emotions))
@@ -150,7 +153,7 @@ def main():
         for (fstart, fend), label in zip(frames, emotion_ids):
 
             # filter data within start-end time, except heart rate
-            data[fstart:fend,:-1] = filter(data[fstart:fend,:-1], FREQ_RATE)
+            data[fstart:fend,:-1] = list(filter(data[fstart:fend,:-1], FREQ_RATE))
             # extract consecutive windows
             i = fstart
             while i+window_size < fend:
@@ -165,11 +168,11 @@ def main():
         features = np.array(features)
 
         filename = 'features_{}'.format(short_name)
-        print '\tSaving file {}...'.format(filename)
-        np.savetxt(output_dir + filename, features, fmt='%f', delimiter=',')
-        print '\tfeatures: ', features.shape
+        output_path = os.path.join(output_dir + filename)
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        np.savetxt(output_path, features, fmt='%f', delimiter=',')
+        features.shape
 
 
 if __name__ == "__main__":
     main()
-

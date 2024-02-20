@@ -24,9 +24,12 @@ def main():
     dpi = args.dpi
     output_file = args.output_file
 
-    movie = yaml.load(open(args.mo))
-    music = yaml.load(open(args.mu))
-    music_walk = yaml.load(open(args.mw))
+    with open(args.mo, 'r') as file:
+        movie = yaml.load(file, Loader=yaml.Loader)
+    with open(args.mu, 'r') as file:
+        music = yaml.load(file, Loader=yaml.Loader)
+    with open(args.mw, 'r') as file:
+        music_walk = yaml.load(file, Loader=yaml.Loader)
 
     plt.style.use('seaborn-whitegrid')
     plt.figure(dpi=dpi)

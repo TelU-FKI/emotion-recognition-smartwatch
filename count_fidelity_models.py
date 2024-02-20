@@ -15,9 +15,12 @@ def main():
 
     # set variables based on arguments passed
     args = parser.parse_args()
-    movie = yaml.load(open(args.mo))
-    music = yaml.load(open(args.mu))
-    music_walk = yaml.load(open(args.mw))
+    with open(args.mo, 'r') as file:
+        movie = yaml.load(file, Loader=yaml.Loader)
+    with open(args.mu, 'r') as file:
+        music = yaml.load(file, Loader=yaml.Loader)
+    with open(args.mw, 'r') as file:
+        music_walk = yaml.load(file, Loader=yaml.Loader)
 
     labels = ['rf', 'logit']
 
@@ -31,17 +34,17 @@ def main():
     data = np.array(data)
     total =  data.shape[0]
 
-    print 'total personal models = {}'.format(total)
+    print('total personal models = {}'.format(total))
 
     upper = 0.80
     lower = 0.70
     competent = len(np.where(data>upper)[0])
     average = len(np.where((data<=upper) & (data >= lower))[0])
     poor = len(np.where(data<lower)[0])
-    print 'greater than 80% = {}'.format(competent)
-    print '70-80% = {}'.format(average)
-    print '<70% = {}'.format(poor)
-    print 'check total =  {}'.format(competent + average + poor)
+    print('greater than 80% = {}'.format(competent))
+    print('70-80% = {}'.format(average))
+    print('<70% = {}'.format(poor))
+    print('check total =  {}'.format(competent + average + poor))
 
 
 if __name__ == "__main__":

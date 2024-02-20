@@ -34,12 +34,12 @@ def main():
 
     def process_condition(fnames, condition):
 
-        print 'condition', condition
+        print('condition', condition)
 
         results = defaultdict(list)
 
         for fname in fnames:
-            print 'classifying: %s' % fname
+            print('classifying: %s' % fname)
             label = fname.split('/')[-1]
 
             data = np.loadtxt(fname, delimiter=',')
@@ -49,7 +49,7 @@ def main():
             # acc features + heart rate + y label
             #data = np.hstack([data[:,:51], data[:,-2:]])
 
-            print data.shape
+            print(data.shape)
 
             if not neutral:
                 # delete neutral to see if we can distinguish between

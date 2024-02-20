@@ -132,7 +132,7 @@ def main():
 
     for fname in input_files:
         short_name = fname.split('/')[-1]
-        print 'processing ', short_name
+        print('processing ', short_name)
         condition_emotion = np.genfromtxt(fname, skip_header=1, delimiter=delimiter, usecols=(0,1))
         emotions = map(int, condition_emotion[:,1].tolist())
 
@@ -165,11 +165,10 @@ def main():
         features = np.array(features)
 
         filename = 'features_{}'.format(short_name)
-        print '\tSaving file {}...'.format(filename)
+        print('\tSaving file {}...'.format(filename))
         np.savetxt(output_dir + filename, features, fmt='%f', delimiter=',')
-        print '\tfeatures: ', features.shape
+        print('\tfeatures: ', features.shape)
 
 
 if __name__ == "__main__":
     main()
-

@@ -1,12 +1,10 @@
 import argparse
+# import glob
 import yaml
 import numpy as np
 from collections import defaultdict
 
-from sklearn import linear_model
-from sklearn import metrics
-from sklearn import model_selection
-from sklearn import preprocessing
+from sklearn import linear_model, metrics, model_selection, preprocessing
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
@@ -40,14 +38,14 @@ def main():
 
         if not fnames: 
             return
-        print 'condition', condition
+        print('condition', condition)
 
         results = {'labels':[], 'baseline': defaultdict(list),
                     'logit': defaultdict(list), 
                     'rf': defaultdict(list)}
 
         for fname in fnames:
-            print 'classifying: %s' % fname
+            print('classifying: %s' % fname)
             label = fname.split('/')[-1]
 
             data = np.loadtxt(fname, delimiter=',')
@@ -57,7 +55,7 @@ def main():
 
             # acc features + heart rate + y label
             #data = np.hstack([data[:,:51], data[:,-2:]])
-            print data.shape
+            print(data.shape)
 
             if not neutral:
                 # delete neutral to see if we can distinguish between
@@ -75,7 +73,7 @@ def main():
             models = [
                     ('baseline', DummyClassifier(strategy = 'most_frequent')),
                     #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
-                    ('logit', linear_model.LogisticRegression()),
+                    ('logit', linear_model.LogisticRegression(max_iter=10000)),
                     ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
                     ]
                     
@@ -87,24 +85,39 @@ def main():
                                         random_state=SEED)
 
             for key, clf in models:
-                scores = {'f1':[], 'acc':[], 'roc_auc':[]}
-                for i, (train,test) in enumerate(rskf.split(x_data, y_data)):
-                    x_train, x_test = x_data[train], x_data[test]
-                    y_train, y_test = y_data[train], y_data[test]
-                    clf.fit(x_train, y_train)
-                    y_pred = clf.predict(x_test)
-                    _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
-                    _acc = metrics.accuracy_score(y_test, y_pred)
-                    y_proba = clf.predict_proba(x_test)
-                    _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted')
-                    scores['f1'].append(_f1)
-                    scores['acc'].append(_acc)
-                    scores['roc_auc'].append(_roc_auc)
+                    scores = {'f1':[], 'acc':[], 'roc_auc':[]}
+                    for i, (train,test) in enumerate(rskf.split(x_data, y_data)):
+                        x_train, x_test = x_data[train], x_data[test]
+                        y_train, y_test = y_data[train], y_data[test]
+                        clf.fit(x_train, y_train)
+                        y_pred = clf.predict(x_test)
+                        _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
+                        _acc = metrics.accuracy_score(y_test, y_pred)
+                        if hasattr(clf, 'predict_proba'):
+                            y_proba = clf.predict_proba(x_test)
+                            if len(np.unique(y_test)) > 2:  # Multi-class scenario
+                                _roc_auc = metrics.roc_auc_score(y_test, y_proba, average='weighted', multi_class='ovr')
+                            else:  # Binary classification
+                                _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted', multi_class='ovr')
+                            if not np.isnan(_roc_auc):
+                                scores['roc_auc'].append(_roc_auc)
 
-                #results[key] = {'f1': np.mean(scores['f1']), 'acc': np.mean(scores['acc']), 'f1_all': scores['f1'], 'acc_all':scores['acc']}
-                results[key]['f1'].append(np.mean(scores['f1']))
-                results[key]['acc'].append(np.mean(scores['acc']))
-                results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+                        else:
+                            _roc_auc = None
+                        scores['f1'].append(_f1)
+                        scores['acc'].append(_acc)
+
+                    results[key]['f1'].append(np.mean(scores['f1']))
+                    results[key]['acc'].append(np.mean(scores['acc']))
+                    if scores['roc_auc']:  # Check if the list is not empty
+                        results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+                    else:
+                        results[key]['roc_auc'].append(None)
+
+                # #results[key] = {'f1': np.mean(scores['f1']), 'acc': np.mean(scores['acc']), 'f1_all': scores['f1'], 'acc_all':scores['acc']}
+                # results[key]['f1'].append(np.mean(scores['f1']))
+                # results[key]['acc'].append(np.mean(scores['acc']))
+                # results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
 
         #for key, model in models:
         #    print key, np.mean(results[key]), np.std(results[key])

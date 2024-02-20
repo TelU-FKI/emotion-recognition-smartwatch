@@ -28,7 +28,7 @@ def main():
 
     def process_condition(fnames, condition):
 
-        print 'condition', condition
+        print('condition', condition)
         user_ids = []
         # these store the CV results for each personal model
         scores = {key:defaultdict(list) for key in ['baseline', 'logit', 'rf']}
@@ -54,19 +54,19 @@ def main():
         num_users = len(fnames)
 
         for i in range(num_users):
-            print 'validating user ', i
+            print('validating user ', i)
             start, end = user_index[i]
             x_test = x_data[start:end]
             y_test = y_data[start:end]
 
-            train_index = range(0, start) + range(end, data.shape[0])
+            train_index = list(range(0, start)) + list(range(end, data.shape[0]))
             x_train = x_data[train_index]
             y_train = y_data[train_index]
 
             models = [
                     ('baseline', DummyClassifier(strategy = 'most_frequent')),
                     #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
-                    ('logit', linear_model.LogisticRegression()),
+                     ('logit', linear_model.LogisticRegression(max_iter=10000, solver='sag')),
                     ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
                     ]
 
@@ -83,12 +83,12 @@ def main():
                 scores[key]['roc_auc'].append(_roc_auc)
 
 
-        print 'model\t\tacc\tf1\troc_auc'
-        for key, scores in scores.iteritems():
-            print '{}:\t\t{:.3f} ({:.3f})\t{:.3f} ({:.3f})\t{:.3f} ({:.3f})'.format(
-                    key, np.mean(scores['acc']), np.std(scores['acc']),
-                    np.mean(scores['f1']), np.std(scores['f1']),
-                    np.mean(scores['roc_auc']), np.std(scores['roc_auc']))
+        print('model\t\tacc\tf1\troc_auc')
+        for key, scores in scores.items():
+            print('{}:\t\t{:.3f} ({:.3f})\t{:.3f} ({:.3f})\t{:.3f} ({:.3f})'.format(
+                key, np.mean(scores['acc']), np.std(scores['acc']),
+                np.mean(scores['f1']), np.std(scores['f1']),
+                np.mean(scores['roc_auc']), np.std(scores['roc_auc'])))
 
         results = {'labels': user_ids, 'scores': scores}
 

@@ -30,7 +30,7 @@ def main():
 
     def process_condition(fnames, condition):
 
-        print 'condition', condition
+        print('condition', condition)
 
         results = {'labels':[], 'baseline': defaultdict(list),
                     'logit': defaultdict(list), 
@@ -39,7 +39,7 @@ def main():
         folds = 10
 
         for fname in fnames:
-            print 'classifying: %s' % fname
+            print('classifying: %s' % fname)
             label = fname.split('/')[-1]
 
             data = np.loadtxt(fname, delimiter=',')
@@ -74,7 +74,7 @@ def main():
             models = [
                     ('baseline', DummyClassifier(strategy = 'most_frequent')),
                     #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
-                    ('logit', linear_model.LogisticRegression()),
+                    ('logit', linear_model.LogisticRegression(max_iter=10000, solver='sag')),
                     ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
                     ]
 

@@ -18,27 +18,27 @@ def permute(results):
     rf_roc = np.array(results['rf']['roc_auc'])
 
     logit_lift = logit - baseline
+    rf_lift = rf - baseline
 
     print('model\t\tAUC\t\tF1\t\tmean\t\tdiff\tp-value')
-    print('baseline\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})'.format(
+    print(('baseline\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})'.format(
                     roc=baseline_roc.mean(), roc_std=baseline_roc.std(),
                     f1=baseline_f1.mean(), f1_std=baseline_f1.std(),
-                    acc=baseline.mean(), acc_std=baseline.std()))
+                    acc=baseline.mean(), acc_std=baseline.std())))
 
     (p, diff_means) = one_sample(logit_lift, stat='mean')
-    print('Logit\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
+    print(('Logit\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
             roc=logit_roc.mean(), roc_std=logit_roc.std(),
             f1=logit_f1.mean(), f1_std=logit_f1.std(),
             acc=logit.mean(), acc_std=logit.std(),
-            diff=diff_means, p=p))
-    
-    rf_lift = rf - baseline
+            diff=diff_means, p=p)))
+
     (p, diff_means) = one_sample(rf_lift, stat='mean')
-    print('RF\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
+    print(('RF\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
             roc=rf_roc.mean(), roc_std=rf_roc.std(),
             f1=rf_f1.mean(), f1_std=rf_f1.std(),
             acc=rf.mean(), acc_std=rf.std(),
-            diff=diff_means, p=p))
+            diff=diff_means, p=p)))
 
 
 def main():
@@ -51,21 +51,24 @@ def main():
     args = parser.parse_args()
 
     if args.mo:
-        movie_results = yaml.load(open(args.mo))
-        print '^' * 20
-        print 'Movie'
+        with open(args.mo, 'r') as file:
+            movie_results = yaml.load(file, Loader=yaml.Loader)
+        print('^' * 20)
+        print('Movie')
         permute(movie_results)
 
     if args.mu:
-        music_results = yaml.load(open(args.mu))
-        print '^' * 20
-        print 'Music'
+        with open(args.mu, 'r') as file:
+            music_results = yaml.load(file, Loader=yaml.Loader)
+        print('^' * 20)
+        print('Music')
         permute(music_results)
 
     if args.mw:
-        music_walk_results = yaml.load(open(args.mw))
-        print '^' * 20
-        print 'Music + walking'
+        with open(args.mw, 'r') as file:
+            music_walk_results = yaml.load(file, Loader=yaml.Loader)
+        print('^' * 20)
+        print('Music + walking')
         permute(music_walk_results)
 
 

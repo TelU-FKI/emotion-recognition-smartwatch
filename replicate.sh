@@ -30,13 +30,13 @@ python2 boxplot.py -mo mo_lift_scores_holdout.yaml -mu mu_lift_scores_holdout.ya
 # PERMUTATION TEST
 #----------------------------------------#
 
-python2 permute_test.py -mo mo_lift_scores_loov_user.yaml -mu mu_lift_scores_loov_user.yaml -mw mw_lift_scores_loov_user.yaml
+python permute_test.py -mo mo_louo_lift_scores_loov_user.yaml -mu mu_louo_lift_scores_loov_user.yaml -mw mw_louo_lift_scores_loov_user.yaml # still error because different yaml syntax
 
 # all features
-python2 permute_test.py -mo mo_lift_scores_acc.yaml -mu mu_lift_scores_acc.yaml -mw mw_lift_scores_acc.yaml
+python permute_test.py -mo mo_lift_scores_acc.yaml -mu mu_lift_scores_acc.yaml -mw mw_lift_scores_acc.yaml
 
 # neutral
-python2 permute_test.py -mo mo_lift_scores_neutral.yaml -mu mu_lift_scores_neutral.yaml -mw mw_lift_scores_neutral.yaml
+python permute_test.py -mo mo_lift_scores_neutral.yaml -mu mu_lift_scores_neutral.yaml -mw mw_lift_scores_neutral.yaml
 
 # emotion holdout
-python2 permute_test.py -mo mo_lift_scores_holdout.yaml -mu mu_lift_scores_holdout.yaml -mw mw_lift_scores_holdout.yaml
+python permute_test.py -mo mo_lift_scores_holdout.yaml -mu mu_lift_scores_holdout.yaml -mw mw_lift_scores_holdout.yaml

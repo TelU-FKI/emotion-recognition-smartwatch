@@ -7,85 +7,79 @@ from scipy import stats
 from scipy import signal
 
 
-def filter(data, fs):
-
-    #third order median filter
-    total_acc_x = signal.medfilt(data[:,0], 3)
-    total_acc_y = signal.medfilt(data[:,1], 3)
-    total_acc_z = signal.medfilt(data[:,2], 3)
-    data[:, 0] = total_acc_x
+def filter(data, fs): 
+    # Third order median filter to remove noise from accelerometer data
+    print("Data shape: " + data.shape)
+    print("data 1: " + data[:,0])
+    print("data 2: " + data[:,1])
+    print("data 3: " + data[:,2])
+    total_acc_x = signal.medfilt(data[:,0], 3) # 3rd order median filter
+    total_acc_y = signal.medfilt(data[:,1], 3) # 3rd order median filter
+    total_acc_z = signal.medfilt(data[:,2], 3) # 3rd order median filter
+    print("total_acc_x: " + total_acc_x)
+    print("total_acc_y: " + total_acc_y)
+    print("total_acc_z: " + total_acc_z)
+    data[:, 0] = total_acc_x # replace the first column with the filtered data
     data[:, 1] = total_acc_y
     data[:, 2] = total_acc_z
+    print("data 1-1: " + data[:,0])
+    print("data 2-1: " + data[:,1])
+    print("data 3-1: " + data[:,2])
     return data
 
 
 def angle_between_vectors(a, b):
-    dot = np.dot(a, b)
-    cp = np.cross(a, b)
-    cp_norm = np.sqrt(np.sum(cp * cp))
-    angle = math.atan2(cp_norm, dot)
+    # Calculate the angle between two vectors using dot product and cross product
+    print("a: " + a)
+    print("b: " + b)
+    dot = np.dot(a, b) # np.dot is the dot product of two arrays
+    # np.dot(a, b) = a[0]*b[0] + a[1]*b[1] + a[2]*b[2]
+    print("dot: " + dot)
+    cp = np.cross(a, b) # np.cross is the cross product of two arrays
+    # np.cross(a, b) = [a[1]*b[2] - a[2]*b[1], a[2]*b[0] - a[0]*b[2], a[0]*b[1] - a[1]*b[0]]
+    print("cp: " + cp)
+    cp_norm = np.sqrt(np.sum(cp * cp)) # np.sqrt is the square root of an array, np.sum is the sum of an array
+    print("cp_norm: " + cp_norm)
+    angle = math.atan2(cp_norm, dot) # math.atan2 is the arctangent of two arrays
+    print("angle: " + angle)
     return angle
 
 
 def get_feature_vector(data):
+    # Extract various statistical features from the given data column
     feature_functions = [
-                       # 1. 
-                       np.mean,
-                       # 2. 
-                       np.amax,
-                       # 3. 
-                       np.amin,
-                       # 4. 
-                       np.std,
-                       # 5. energy
-                       lambda d: np.sum(d**2)/d.shape[0],
-                       # 6.
-                       stats.kurtosis,
-                       # 7.
-                       stats.skew,
-                       # 8. rms
-                       lambda d: np.sqrt(np.mean(np.square(d))),
-                       # 9. rss
-                       lambda d: np.sqrt(np.sum(np.square(d))),
-                       # 10. area
-                       np.sum,
-                       # 11. abs area
-                       lambda d: np.sum(np.abs(d)),
-                       # 12. abs mean
-                       lambda d: np.mean(np.abs(d)),
-                       # 13. range
-                       lambda d: np.amax(d)-np.amin(d),
-                       # 14. quartiles
-                       lambda d: np.percentile(d, 25),
-                       # 15. quartiles
-                       lambda d: np.percentile(d, 50),
-                       # 16. quartiles
-                       lambda d: np.percentile(d, 75),
-                       # 17. mad
-                       lambda d: np.median(np.abs(d - np.median(d)))]
+                       np.mean,  # 1. Mean
+                       np.amax,  # 2. Maximum
+                       np.amin,  # 3. Minimum
+                       np.std,   # 4. Standard Deviation
+                       lambda d: np.sum(d**2)/d.shape[0],  # 5. Energy
+                       stats.kurtosis,  # 6. Kurtosis, itu adalah ukuran seberapa tajam puncak distribusi data
+                       stats.skew,  # 7. Skewness, itu adalah ukuran seberapa simetris distribusi data
+                       lambda d: np.sqrt(np.mean(np.square(d))),  # 8. Root Mean Square
+                       lambda d: np.sqrt(np.sum(np.square(d))),  # 9. Root Sum of Squares
+                       np.sum,  # 10. Area
+                       lambda d: np.sum(np.abs(d)),  # 11. Absolute Area
+                       lambda d: np.mean(np.abs(d)),  # 12. Absolute Mean
+                       lambda d: np.amax(d)-np.amin(d),  # 13. Range
+                       lambda d: np.percentile(d, 25),  # 14. 1st Quartile
+                       lambda d: np.percentile(d, 50),  # 15. 2nd Quartile (Median)
+                       lambda d: np.percentile(d, 75),  # 16. 3rd Quartile
+                       lambda d: np.median(np.abs(d - np.median(d)))]  # 17. Median Absolute Deviation
 
     features = [f(data) for f in feature_functions]
 
     return features
-    #return np.array(features)
 
 
 def extract_features(window):
-
+    # Extract features from the given window of data
     features = []
-    heart_rate = window[:, -1]
-    window_no_hr = window[:, :-1]
-    for column in window_no_hr.T:
+    heart_rate = window[:, -1] # last column is heart rate, jadi -1 itu untuk mengambil kolom terakhir
+    window_no_hr = window[:, :-1] # remove heart rate column
+    for column in window_no_hr.T:  # iterate over each column
         features.extend(get_feature_vector(column))
 
-    # acc
-    # 17 * 3 = 51
-    # gyro
-    # 17 * 3 = 51
-
-    # total = 102
-
-    ##angle - 3
+    # Calculate additional features related to acceleration and angles
     x = window[:, 0]
     y = window[:, 1]
     z = window[:, 2]
@@ -105,12 +99,13 @@ def extract_features(window):
     # (17*3) + (17*3) + 3 + 1 + 1 (hr) = 107
     # + y label = 108
 
-    features.append(heart_rate[0])
+    features.append(heart_rate[0]) # apa isi heart_rate[0]? heart_rate[0] itu adalah isi dari baris pertama kolom terakhir, jadi nanti di akhir hr-nya disatukan
 
     return features
 
 
 def main():
+    # Parse command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("input_files", metavar='file', type=str, nargs='+', help="file containing acc data")
     parser.add_argument('output_dir', type=str, help='output directory')
@@ -160,7 +155,6 @@ def main():
                 f_vector.append(label)
                 features.append(f_vector)
                 i += step
-
 
         features = np.array(features)
 

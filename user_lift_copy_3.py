@@ -8,7 +8,7 @@ from sklearn import linear_model, metrics, model_selection, preprocessing
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV  # Change this import
 
 from permute.core import one_sample
 
@@ -72,21 +72,33 @@ def main():
             # scaled
             x_data = preprocessing.scale(x_data)
 
-            param_grid = {
-                'bootstrap': [True],
-                'max_depth': [80, 90, 100, 110],
-                'max_features': [2, 3],
-                'min_samples_leaf': [3, 4, 5],
-                'min_samples_split': [8, 10, 12],
-                'n_estimators': [100, 200, 300, 1000]
-            }
+            # Number of trees in random forest
+            n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
+            # Number of features to consider at every split
+            max_features = ['auto', 'sqrt']
+            # Maximum number of levels in tree
+            max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
+            max_depth.append(None)
+            # Minimum number of samples required to split a node
+            min_samples_split = [2, 5, 10]
+            # Minimum number of samples required at each leaf node
+            min_samples_leaf = [1, 2, 4]
+            # Method of selecting samples for training each tree
+            bootstrap = [True, False]
+
+            # Create the random grid
+            param_dist = {'n_estimators': n_estimators,
+                        'max_features': max_features,
+                        'max_depth': max_depth,
+                        'min_samples_split': min_samples_split,
+                        'min_samples_leaf': min_samples_leaf,
+                        'bootstrap': bootstrap}
 
             models = [
-                    ('baseline', DummyClassifier(strategy = 'most_frequent')),
-                    #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
+                    ('baseline', DummyClassifier(strategy='most_frequent')),
                     ('logit', linear_model.LogisticRegression(max_iter=10000)),
-                    ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
-                    ('rf_tuning', GridSearchCV(estimator = RandomForestClassifier(n_estimators = N_ESTIMATORS), param_grid = param_grid, cv = 3, n_jobs = -1, verbose = 0))
+                    ('rf', RandomForestClassifier(n_estimators=N_ESTIMATORS)),
+                    ('rf_tuning', RandomizedSearchCV(estimator=RandomForestClassifier(n_estimators=N_ESTIMATORS),param_distributions=param_dist, n_iter=100, cv=3, random_state=42, n_jobs=-1, verbose=0))
                     ]
                     
             results['labels'].append(label)

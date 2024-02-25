@@ -8,17 +8,21 @@ def permute(results):
     baseline = np.array(results['baseline']['acc'])
     logit = np.array(results['logit']['acc'])
     rf = np.array(results['rf']['acc'])
+    rf_tuning = np.array(results['rf_tuning']['acc'])  # Add 'rf_tuning' key to the 'results' dictionary
 
     baseline_f1 = np.array(results['baseline']['f1'])
     logit_f1 = np.array(results['logit']['f1'])
     rf_f1 = np.array(results['rf']['f1'])
+    rf_tuning_f1 = np.array(results['rf_tuning']['f1'])  # Add 'rf_tuning' key to the 'results' dictionary
 
     baseline_roc = np.array(results['baseline']['roc_auc'])
     logit_roc = np.array(results['logit']['roc_auc'])
     rf_roc = np.array(results['rf']['roc_auc'])
+    rf_tuning_roc = np.array(results['rf_tuning']['roc_auc'])  # Add 'rf_tuning' key to the 'results' dictionary
 
     logit_lift = logit - baseline
     rf_lift = rf - baseline
+    rf_tuning_lift = rf_tuning - baseline
 
     print('model\t\tAUC\t\tF1\t\tmean\t\tdiff\tp-value')
     print(('baseline\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})'.format(
@@ -39,7 +43,18 @@ def permute(results):
             f1=rf_f1.mean(), f1_std=rf_f1.std(),
             acc=rf.mean(), acc_std=rf.std(),
             diff=diff_means, p=p)))
+    
+    (p, diff_means) = one_sample(rf_tuning_lift, stat='mean')
+    print(('RF_tuning\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
+            roc=rf_tuning_roc.mean(), roc_std=rf_tuning_roc.std(),
+            f1=rf_tuning_f1.mean(), f1_std=rf_tuning_f1.std(),
+            acc=rf_tuning.mean(), acc_std=rf_tuning.std(),
+            diff=diff_means, p=p)))
 
+    # apa itu std? apa itu p-value? apa itu diff? 
+    # std = standard deviation = seberapa jauh data dari mean (rata-rata)
+    # p-value = probability value = seberapa besar kemungkinan data yang dihasilkan adalah kebetulan
+    # diff = difference = perbedaan antara mean data dengan mean baseline
 
 def main():
     np.random.seed(1)

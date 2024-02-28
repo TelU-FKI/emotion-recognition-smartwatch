@@ -75,7 +75,7 @@ def main():
             # Number of trees in random forest
             n_estimators = [int(x) for x in np.linspace(start = 200, stop = 2000, num = 10)]
             # Number of features to consider at every split
-            max_features = ['auto', 'sqrt']
+            max_features = ['sqrt', 'log2', None]
             # Maximum number of levels in tree
             max_depth = [int(x) for x in np.linspace(10, 110, num = 11)]
             max_depth.append(None)
@@ -93,17 +93,23 @@ def main():
                         'min_samples_split': min_samples_split,
                         'min_samples_leaf': min_samples_leaf,
                         'bootstrap': bootstrap}
+            
+            # Create a separate instance of RandomForestClassifier for tuning
+            base_rf = RandomForestClassifier(n_estimators=N_ESTIMATORS)
+
+            # Use RandomizedSearchCV for hyperparameter tuning
+            rf_tuner = RandomizedSearchCV(estimator=base_rf, param_distributions=param_dist, n_iter=100, cv=3, random_state=42, n_jobs=-1, verbose=0)
 
             models = [
-                    ('baseline', DummyClassifier(strategy='most_frequent')),
-                    ('logit', linear_model.LogisticRegression(max_iter=10000)),
-                    ('rf', RandomForestClassifier(n_estimators=N_ESTIMATORS)),
-                    ('rf_tuning', RandomizedSearchCV(estimator=RandomForestClassifier(n_estimators=N_ESTIMATORS),param_distributions=param_dist, n_iter=100, cv=3, random_state=42, n_jobs=-1, verbose=0))
-                    ]
+                ('baseline', DummyClassifier(strategy='most_frequent')),
+                ('logit', linear_model.LogisticRegression(max_iter=10000)),
+                ('rf', base_rf),  # Use the base_rf instance here
+                ('rf_tuning', rf_tuner)  # Use rf_tuner for hyperparameter tuning
+            ]
                     
             results['labels'].append(label)
-            repeats = 10
-            folds = 10
+            repeats = 2
+            folds = 2
             rskf = RepeatedStratifiedKFold(n_splits=folds, 
                                         n_repeats=repeats,
                                         random_state=SEED)

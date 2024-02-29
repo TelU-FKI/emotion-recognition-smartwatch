@@ -108,8 +108,8 @@ def main():
             ]
                     
             results['labels'].append(label)
-            repeats = 2
-            folds = 2
+            repeats = 10
+            folds = 10
             rskf = RepeatedStratifiedKFold(n_splits=folds, 
                                         n_repeats=repeats,
                                         random_state=SEED)
@@ -122,9 +122,7 @@ def main():
                         clf.fit(x_train, y_train)
                         if key == 'rf_tuning':
                             print("Best Parameters:", clf.best_params_)
-                            best_model = clf.best_estimator_
-                            print("Best Model:", best_model)
-
+                            print("Best Score:", clf.best_score_)
                         y_pred = clf.predict(x_test)
                         _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
                         _acc = metrics.accuracy_score(y_test, y_pred)

@@ -55,7 +55,7 @@ def main():
     parser.add_argument("-mo", type=str, help="movie yaml")
     parser.add_argument("-mu", type=str, help="music yaml")
     parser.add_argument("-mw", type=str, help="music+walk yaml")
-    parser.add_argument("-o", "--output_file", type=str, help="file name for saving the generated plot.")
+    parser.add_argument("-o", "--output_file", type=str, help="file name for saving the generated plot.", default="output3")
     parser.add_argument("-r", "--dpi", type=int, help="resolution of image", default = 300)
 
     # set variables based on arguments passed
@@ -76,7 +76,7 @@ def main():
     data = [movie['rf'], music['rf'], music_walk['rf']]
 
     # colors for different sensors in boxplots
-    colors=['lightblue', 'white', 'thistle']
+    colors=['white', 'tifannyblue', 'lightcoral']
     # titles for subplots
     titles = ['Movie', 'Music', 'Music while walking']
 

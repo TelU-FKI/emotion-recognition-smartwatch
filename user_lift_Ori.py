@@ -3,12 +3,16 @@ import yaml
 import numpy as np
 from collections import defaultdict
 
-from sklearn import linear_model, metrics, model_selection, preprocessing
+from sklearn import linear_model
+from sklearn import metrics
+from sklearn import model_selection
+from sklearn import preprocessing
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import RepeatedStratifiedKFold, GridSearchCV
+from sklearn.model_selection import RepeatedStratifiedKFold
 
 from permute.core import one_sample
+
 
 SEED = 1
 np.random.seed(SEED)
@@ -48,7 +52,16 @@ def main():
 
             data = np.loadtxt(fname, delimiter=',')
 
+            # only acc: acc + y_label as column vector
+            #data = np.hstack([data[:,:51], data[:,-1].reshape(data.shape[0], 1)])
+
+            # acc features + heart rate + y label
+            #data = np.hstack([data[:,:51], data[:,-2:]])
+            print(data.shape)
+
             if not neutral:
+                # delete neutral to see if we can distinguish between
+                # happy/sad
                 data = np.delete(data, np.where(data[:,-1]==0), axis=0)
 
             np.random.shuffle(data)
@@ -56,12 +69,14 @@ def main():
             x_data = data[:,:-1]
             y_data = data[:,-1]
 
+            # scaled
             x_data = preprocessing.scale(x_data)
 
             models = [
-                    ('baseline', DummyClassifier(strategy='most_frequent')),
-                    ('logit', linear_model.LogisticRegression(max_iter=10000)),
-                    ('rf', RandomForestClassifier(n_estimators=N_ESTIMATORS)),
+                    ('baseline', DummyClassifier(strategy = 'most_frequent')),
+                    #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
+                    ('logit', linear_model.LogisticRegression(max_iter=1000)),
+                    ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
                     ]
                     
             results['labels'].append(label)
@@ -72,13 +87,6 @@ def main():
                                         random_state=SEED)
 
             for key, clf in models:
-                if key == 'rf':
-                    param_grid = {
-                        'n_estimators': [50, 100, 200],
-                        'max_depth': [None, 10, 20],
-                        'min_samples_split': [2, 5, 10]
-                    }
-                    clf = GridSearchCV(clf, param_grid, cv=rskf)
                 scores = {'f1':[], 'acc':[], 'roc_auc':[]}
                 for i, (train,test) in enumerate(rskf.split(x_data, y_data)):
                     x_train, x_test = x_data[train], x_data[test]
@@ -87,35 +95,24 @@ def main():
                     y_pred = clf.predict(x_test)
                     _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
                     _acc = metrics.accuracy_score(y_test, y_pred)
-                    if hasattr(clf, 'predict_proba'):
-                        y_proba = clf.predict_proba(x_test)
-                        if len(np.unique(y_test)) > 2:  # Multi-class scenario
-                            _roc_auc = metrics.roc_auc_score(y_test, y_proba, average='weighted', multi_class='ovr')
-                        else:  # Binary classification
-                            _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted', multi_class='ovr')
-                        if not np.isnan(_roc_auc):
-                            scores['roc_auc'].append(_roc_auc)
-                    else:
-                        _roc_auc = None
+                    y_proba = clf.predict_proba(x_test)
+                    _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted')
                     scores['f1'].append(_f1)
                     scores['acc'].append(_acc)
+                    scores['roc_auc'].append(_roc_auc)
 
+                #results[key] = {'f1': np.mean(scores['f1']), 'acc': np.mean(scores['acc']), 'f1_all': scores['f1'], 'acc_all':scores['acc']}
                 results[key]['f1'].append(np.mean(scores['f1']))
                 results[key]['acc'].append(np.mean(scores['acc']))
-                if scores['roc_auc']:  # Check if the list is not empty
-                    results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
-                else:
-                    results[key]['roc_auc'].append(None)
-
-                # #results[key] = {'f1': np.mean(scores['f1']), 'acc': np.mean(scores['acc']), 'f1_all': scores['f1'], 'acc_all':scores['acc']}
-                # results[key]['f1'].append(np.mean(scores['f1']))
-                # results[key]['acc'].append(np.mean(scores['acc']))
-                # results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+                results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
 
         #for key, model in models:
         #    print key, np.mean(results[key]), np.std(results[key])
 
         yaml.dump(results, open(condition+'_lift_scores_'+output_file+'.yaml', 'w'))
+
+    # end of function
+    #-------------
 
     if args.mu:
         process_condition(args.mu, 'mu')

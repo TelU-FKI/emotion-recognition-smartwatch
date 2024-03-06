@@ -123,6 +123,7 @@ def main():
                         if key == 'rf_tuning':
                             print("Best Parameters:", clf.best_params_)
                             print("Best Score:", clf.best_score_)
+                            print('classifying: %s' % fname)
                         y_pred = clf.predict(x_test)
                         _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
                         _acc = metrics.accuracy_score(y_test, y_pred)

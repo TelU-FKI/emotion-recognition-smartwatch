@@ -98,7 +98,7 @@ def main():
             base_rf = RandomForestClassifier(n_estimators=N_ESTIMATORS)
 
             # Use RandomizedSearchCV for hyperparameter tuning
-            rf_tuner = RandomizedSearchCV(estimator=base_rf, param_distributions=param_dist, n_iter=100, cv=3, random_state=42, n_jobs=-1, verbose=0)
+            rf_tuner = RandomizedSearchCV(estimator=base_rf, param_distributions=param_dist, n_iter=10, cv=3, random_state=42, n_jobs=-1, verbose=0)
 
             models = [
                 ('baseline', DummyClassifier(strategy='most_frequent')),
@@ -114,39 +114,39 @@ def main():
                                         n_repeats=repeats,
                                         random_state=SEED)
 
-            for key, clf in models:
-                    scores = {'f1':[], 'acc':[], 'roc_auc':[]}
-                    for i, (train,test) in enumerate(rskf.split(x_data, y_data)):
-                        x_train, x_test = x_data[train], x_data[test]
-                        y_train, y_test = y_data[train], y_data[test]
-                        clf.fit(x_train, y_train)
-                        if key == 'rf_tuning':
-                            print("Best Parameters:", clf.best_params_)
-                            print("Best Score:", clf.best_score_)
-                            print('classifying: %s' % fname)
-                        y_pred = clf.predict(x_test)
-                        _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
-                        _acc = metrics.accuracy_score(y_test, y_pred)
-                        if hasattr(clf, 'predict_proba'):
-                            y_proba = clf.predict_proba(x_test)
-                            if len(np.unique(y_test)) > 2:  # Multi-class scenario
-                                _roc_auc = metrics.roc_auc_score(y_test, y_proba, average='weighted', multi_class='ovr')
-                            else:  # Binary classification
-                                _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted', multi_class='ovr')
-                            if not np.isnan(_roc_auc):
-                                scores['roc_auc'].append(_roc_auc)
-
-                        else:
-                            _roc_auc = None
-                        scores['f1'].append(_f1)
-                        scores['acc'].append(_acc)
-
-                    results[key]['f1'].append(np.mean(scores['f1']))
-                    results[key]['acc'].append(np.mean(scores['acc']))
-                    if scores['roc_auc']:  # Check if the list is not empty
-                        results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+            for i, (key, clf) in enumerate(models):
+                scores = {'f1': [], 'acc': [], 'roc_auc': []}
+                for j, (train, test) in enumerate(rskf.split(x_data, y_data)):
+                    x_train, x_test = x_data[train], x_data[test]
+                    y_train, y_test = y_data[train], y_data[test]
+                    clf.fit(x_train, y_train)
+                    if key == 'rf_tuning':
+                        print(f"Counter: {i + 1}, Iteration: {j + 1}")
+                        print("Best Parameters:", clf.best_params_)
+                        print("Best Score:", clf.best_score_)
+                        print('classifying: %s' % fname)
+                    y_pred = clf.predict(x_test)
+                    _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
+                    _acc = metrics.accuracy_score(y_test, y_pred)
+                    if hasattr(clf, 'predict_proba'):
+                        y_proba = clf.predict_proba(x_test)
+                        if len(np.unique(y_test)) > 2:  # Multi-class scenario
+                            _roc_auc = metrics.roc_auc_score(y_test, y_proba, average='weighted', multi_class='ovr')
+                        else:  # Binary classification
+                            _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted', multi_class='ovr')
+                        if not np.isnan(_roc_auc):
+                            scores['roc_auc'].append(_roc_auc)
                     else:
-                        results[key]['roc_auc'].append(None)
+                        _roc_auc = None
+                    scores['f1'].append(_f1)
+                    scores['acc'].append(_acc)
+
+                results[key]['f1'].append(np.mean(scores['f1']))
+                results[key]['acc'].append(np.mean(scores['acc']))
+                if scores['roc_auc']:  # Check if the list is not empty
+                    results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+                else:
+                    results[key]['roc_auc'].append(None)
 
                 # #results[key] = {'f1': np.mean(scores['f1']), 'acc': np.mean(scores['acc']), 'f1_all': scores['f1'], 'acc_all':scores['acc']}
                 # results[key]['f1'].append(np.mean(scores['f1']))

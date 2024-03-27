@@ -5,7 +5,7 @@
 python user_lift.py -mo features/features_mo_ew* -mu features/features_mu_ew* -mw features/features_mw_ew* -o acc8
 
 # happy vs sad vs neutral
-python2 user_lift.py -mo features/features_mo_ew* -mu features/features_mu_ew* -mw features/features_mw_ew* -o neutral --neutral
+python user_lift.py -mo features/features_mo_ew* -mu features/features_mu_ew* -mw features/features_mw_ew* -o neutral --neutral
 
 # hold out one user
 python2 lift_leave_one_user_out.py -mo features/features_mo_ew* -mu features/features_mu_ew* -mw features/features_mw_ew* -o loov_user

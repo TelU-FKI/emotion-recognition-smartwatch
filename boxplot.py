@@ -13,7 +13,7 @@ def main():
     parser.add_argument("-mu", type=str, help="music yaml")
     parser.add_argument("-mw", type=str, help="music+walk yaml")
     parser.add_argument("-o", "--output_file", type=str, help="file name for saving the generated plot.")
-    parser.add_argument("-r", "--dpi", type=int, help="resolution of image", default = 300)
+    parser.add_argument("-r", "--dpi", type=int, help="resolution of image", default = 1000)
     parser.add_argument("-lw", "--line_width", type=float, help="line_width", default = 1.0)
     parser.add_argument("--title", type=str, help="plot title")
 
@@ -36,10 +36,10 @@ def main():
         music_walk = yaml.load(file, Loader=yaml.Loader)
 
     plt.style.use('seaborn-whitegrid')
-    plt.figure(dpi=dpi)
+    plt.figure(figsize=(12, 5), dpi=dpi)  # Increase width here
     plt.rcParams.update({'font.size': 12})
 
-    labels = ['baseline', 'rf', 'logit']
+    labels = ['baseline', 'rf', 'logit', 'rf_tuning']
 
     data = []
     data.append([movie[key]['acc'] for key in labels])
@@ -47,8 +47,8 @@ def main():
     data.append([music_walk[key]['acc'] for key in labels])
 
     titles = ['Movie', 'Music', 'Music while walking']
-    labels = ['Baseline', 'RF', 'Logistic']
-    colors = ['darkseagreen', 'plum', 'sandybrown']
+    labels = ['Baseline', 'RF', 'Logistic', 'RF Tuning']
+    colors = ['#FFCCCC', '#CCFFCC', '#CCCCFF', '#FFFFCC']
 
     share = None
     for i, (group, title) in enumerate(zip(data, titles)):
@@ -70,15 +70,15 @@ def main():
         bp = plt.boxplot(group, labels=labels, patch_artist=True)
         for j, box in enumerate(bp['boxes']):
             # change outline color
-            box.set( color='#7570b3', linewidth=1.2)
+            box.set(color='#7570b3', linewidth=1.2)
             # change fill color
             #box.set(facecolor='#1b9e77')
             box.set(facecolor=colors[j])
 
     
     # for h vs s
-    #plt.suptitle('Distribution of Accuracies of Personal Models Per Condition\nHappy vs Sad', fontsize=14)
-    #plt.ylim(0.45, 1)
+    # plt.suptitle('Distribution of Accuracies of Personal Models Per Condition\nHappy vs Sad', fontsize=14)
+    # plt.ylim(0.45, 1)
 
     # for s-n-h
     plt.suptitle('Distribution of Accuracies of Personal Models Per Condition\nHappy - Neutral - Sad', fontsize=14)
@@ -89,9 +89,9 @@ def main():
     #plt.ylim(0, 1)
 
 
-    plt.subplots_adjust(wspace=1.)
+    # plt.subplots_adjust(wspace=1.)
     plt.tight_layout()
-    plt.subplots_adjust(top=0.87, wspace=0.5)
+    plt.subplots_adjust(top=0.84, wspace=0.2)
 
     if output_file:
         plt.savefig(output_file + '.png', bbox_inches='tight')

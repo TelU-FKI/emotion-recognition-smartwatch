@@ -101,7 +101,10 @@ def main():
             rf_tuner = RandomizedSearchCV(estimator=base_rf, param_distributions=param_dist, n_iter=10, cv=3, random_state=42, n_jobs=-1, verbose=0)
 
             models = [
-                ('baseline', DummyClassifier(strategy='most_frequent')),
+                ('baseline', DummyClassifier(strategy='most_frequent')), 
+                # Use the 'most_frequent' strategy, what is this? explain in comments 
+                # so that the classifier predicts the most frequent class in the training set
+                # how to make the graph of the most frequent class?
                 ('logit', linear_model.LogisticRegression(max_iter=10000)),
                 ('rf', base_rf),  # Use the base_rf instance here
                 ('rf_tuning', rf_tuner)  # Use rf_tuner for hyperparameter tuning

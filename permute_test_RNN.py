@@ -7,21 +7,21 @@ def permute(results):
     baseline = np.array(results['baseline']['acc'])
     logit = np.array(results['logit']['acc'])
     rf = np.array(results['rf']['acc'])
-    ann = np.array(results['ann']['acc'])  # Add 'ann' to the dictionary 'results'
+    cnn = np.array(results['cnn']['acc'])  # Add 'cnn' to the dictionary 'results'
 
     baseline_f1 = np.array(results['baseline']['f1'])
     logit_f1 = np.array(results['logit']['f1'])
     rf_f1 = np.array(results['rf']['f1'])
-    ann_f1 = np.array(results['ann']['f1'])  # Add 'ann' to the dictionary 'results'
+    cnn_f1 = np.array(results['cnn']['f1'])  # Add 'cnn' to the dictionary 'results'
 
     baseline_roc = np.array(results['baseline']['roc_auc'])
     logit_roc = np.array(results['logit']['roc_auc'])
     rf_roc = np.array(results['rf']['roc_auc'])
-    ann_roc = np.array(results['ann']['roc_auc'])  # Add 'ann' to the dictionary 'results'
+    cnn_roc = np.array(results['cnn']['roc_auc'])  # Add 'cnn' to the dictionary 'results'
 
     logit_lift = logit - baseline
     rf_lift = rf - baseline
-    ann_lift = ann - baseline  # Calculate lift for 'ann'
+    cnn_lift = cnn - baseline  # Calculate lift for 'cnn'
 
     print('model\t\tAUC\t\tF1\t\tmean\t\tdiff\tp-value')
     print(('baseline\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})'.format(
@@ -43,11 +43,11 @@ def permute(results):
             acc=rf.mean(), acc_std=rf.std(),
             diff=diff_means, p=p)))
     
-    (p, diff_means) = one_sample(ann_lift, stat='mean')  # Calculate p-value and difference for 'ann'
-    print(('ANN\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
-            roc=ann_roc.mean(), roc_std=ann_roc.std(),
-            f1=ann_f1.mean(), f1_std=ann_f1.std(),
-            acc=ann.mean(), acc_std=ann.std(),
+    (p, diff_means) = one_sample(cnn_lift, stat='mean')  # Calculate p-value and difference for 'cnn'
+    print(('CNN\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
+            roc=cnn_roc.mean(), roc_std=cnn_roc.std(),
+            f1=cnn_f1.mean(), f1_std=cnn_f1.std(),
+            acc=cnn.mean(), acc_std=cnn.std(),
             diff=diff_means, p=p)))
 
     # apa itu std? apa itu p-value? apa itu diff? 

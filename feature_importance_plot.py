@@ -76,7 +76,7 @@ def main():
     data = [movie['rf'], music['rf'], music_walk['rf']]
 
     # colors for different sensors in boxplots
-    colors=['white', 'tifannyblue', 'lightcoral']
+    colors=['lightblue', 'white', 'thistle']
     # titles for subplots
     titles = ['Movie', 'Music', 'Music while walking']
 

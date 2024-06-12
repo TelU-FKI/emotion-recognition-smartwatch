@@ -8,8 +8,9 @@ from sklearn import metrics
 from sklearn import model_selection
 from sklearn import preprocessing
 from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.neighbors import KNeighborsClassifier
 
 from permute.core import one_sample
 
@@ -45,7 +46,7 @@ def main():
         results = {'labels':[], 'baseline': defaultdict(list),
                     'logit': defaultdict(list), 
                     'rf': defaultdict(list),
-                    'gb': defaultdict(list)}
+                    'knn': defaultdict(list)}
 
         for fname in fnames:
             print('classifying: %s' % fname)
@@ -78,7 +79,7 @@ def main():
                     #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
                     ('logit', linear_model.LogisticRegression(max_iter=1000)),
                     ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
-                    ('gb', GradientBoostingClassifier(n_estimators=N_ESTIMATORS))
+                    ('knn', KNeighborsClassifier())
                     ]
                     
             results['labels'].append(label)

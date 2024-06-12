@@ -8,11 +8,11 @@ from sklearn import metrics
 from sklearn import model_selection
 from sklearn import preprocessing
 from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
+from xgboost import XGBClassifier
 
 from permute.core import one_sample
-
 
 SEED = 1
 np.random.seed(SEED)
@@ -45,7 +45,7 @@ def main():
         results = {'labels':[], 'baseline': defaultdict(list),
                     'logit': defaultdict(list), 
                     'rf': defaultdict(list),
-                    'gb': defaultdict(list)}
+                    'xgb': defaultdict(list)}
 
         for fname in fnames:
             print('classifying: %s' % fname)
@@ -53,16 +53,9 @@ def main():
 
             data = np.loadtxt(fname, delimiter=',')
 
-            # only acc: acc + y_label as column vector
-            #data = np.hstack([data[:,:51], data[:,-1].reshape(data.shape[0], 1)])
-
-            # acc features + heart rate + y label
-            #data = np.hstack([data[:,:51], data[:,-2:]])
             print(data.shape)
 
             if not neutral:
-                # delete neutral to see if we can distinguish between
-                # happy/sad
                 data = np.delete(data, np.where(data[:,-1]==0), axis=0)
 
             np.random.shuffle(data)
@@ -70,27 +63,30 @@ def main():
             x_data = data[:,:-1]
             y_data = data[:,-1]
 
+            # Ensure labels are 0 and 1
+            y_data = np.where(y_data == -1, 0, y_data)
+            y_data = np.where(y_data == 1, 1, y_data)
+
             # scaled
             x_data = preprocessing.scale(x_data)
 
             models = [
                     ('baseline', DummyClassifier(strategy = 'most_frequent')),
-                    #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
                     ('logit', linear_model.LogisticRegression(max_iter=1000)),
-                    ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
-                    ('gb', GradientBoostingClassifier(n_estimators=N_ESTIMATORS))
+                    ('rf', RandomForestClassifier(n_estimators=N_ESTIMATORS)),
+                    ('xgb', XGBClassifier(n_estimators=N_ESTIMATORS, use_label_encoder=False, eval_metric='logloss'))
                     ]
                     
             results['labels'].append(label)
             repeats = 2
             folds = 2
             rskf = RepeatedStratifiedKFold(n_splits=folds, 
-                                        n_repeats=repeats,
-                                        random_state=SEED)
+                                           n_repeats=repeats,
+                                           random_state=SEED)
 
             for key, clf in models:
                 scores = {'f1':[], 'acc':[], 'roc_auc':[]}
-                for i, (train,test) in enumerate(rskf.split(x_data, y_data)):
+                for i, (train, test) in enumerate(rskf.split(x_data, y_data)):
                     x_train, x_test = x_data[train], x_data[test]
                     y_train, y_test = y_data[train], y_data[test]
                     clf.fit(x_train, y_train)
@@ -103,18 +99,11 @@ def main():
                     scores['acc'].append(_acc)
                     scores['roc_auc'].append(_roc_auc)
 
-                #results[key] = {'f1': np.mean(scores['f1']), 'acc': np.mean(scores['acc']), 'f1_all': scores['f1'], 'acc_all':scores['acc']}
                 results[key]['f1'].append(np.mean(scores['f1']))
                 results[key]['acc'].append(np.mean(scores['acc']))
                 results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
 
-        #for key, model in models:
-        #    print key, np.mean(results[key]), np.std(results[key])
-
-        yaml.dump(results, open(condition+'_lift_scores_'+output_file+'.yaml', 'w'))
-
-    # end of function
-    #-------------
+        yaml.dump(results, open(condition + '_lift_scores_' + output_file + '.yaml', 'w'))
 
     if args.mu:
         process_condition(args.mu, 'mu')

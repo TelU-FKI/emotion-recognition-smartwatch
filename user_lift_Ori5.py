@@ -5,33 +5,31 @@ from collections import defaultdict
 
 from sklearn import linear_model
 from sklearn import metrics
+from sklearn import model_selection
 from sklearn import preprocessing
 from sklearn.dummy import DummyClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
 
-from permute.core import one_sample
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv1D, Flatten, Dropout
+from tensorflow.keras.optimizers import Adam
+from tensorflow.keras.utils import to_categorical
 
-from keras._tf_keras.keras.models import Sequential
-from keras._tf_keras.keras.layers import Dense, Conv1D, Flatten, Dropout, MaxPooling1D
-from keras._tf_keras.keras.optimizers import Adam
-import tensorflow as tf
+from permute.core import one_sample
 
 SEED = 1
 np.random.seed(SEED)
-tf.random.set_seed(SEED)
 
-def build_cnn_model(input_shape):
+def create_cnn_model(input_shape, num_classes):
     model = Sequential()
     model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_shape))
-    model.add(MaxPooling1D(pool_size=2))
-    model.add(Dropout(0.5))
-    model.add(Conv1D(32, kernel_size=3, activation='relu'))
-    model.add(MaxPooling1D(pool_size=2))
-    model.add(Dropout(0.5))
+    model.add(Conv1D(64, kernel_size=3, activation='relu'))
     model.add(Flatten())
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(optimizer=Adam(learning_rate=0.001), loss='binary_crossentropy', metrics=['accuracy'])
+    model.add(Dense(100, activation='relu'))
+    model.add(Dropout(0.5))
+    model.add(Dense(num_classes, activation='softmax'))
+    model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
     return model
 
 def main():
@@ -70,9 +68,9 @@ def main():
 
             data = np.loadtxt(fname, delimiter=',')
 
-            print(data.shape)
-
             if not neutral:
+                # delete neutral to see if we can distinguish between
+                # happy/sad
                 data = np.delete(data, np.where(data[:,-1]==0), axis=0)
 
             np.random.shuffle(data)
@@ -80,44 +78,50 @@ def main():
             x_data = data[:,:-1]
             y_data = data[:,-1]
 
+            # scaled
             x_data = preprocessing.scale(x_data)
-
-            # Reshape data for CNN
-            x_data_cnn = x_data.reshape((x_data.shape[0], x_data.shape[1], 1))
+            num_classes = len(np.unique(y_data))
+            y_data = to_categorical(y_data, num_classes=num_classes)
 
             models = [
                     ('baseline', DummyClassifier(strategy = 'most_frequent')),
                     ('logit', linear_model.LogisticRegression(max_iter=1000)),
                     ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
-                    ('cnn', build_cnn_model(input_shape=(x_data_cnn.shape[1], 1)))
                     ]
-                    
+
+            input_shape = (x_data.shape[1], 1)
+            cnn_model = create_cnn_model(input_shape, num_classes)
+            models.append(('cnn', cnn_model))
+
             results['labels'].append(label)
-            repeats = 2
-            folds = 2
+            repeats = 10
+            folds = 10
             rskf = RepeatedStratifiedKFold(n_splits=folds, 
                                         n_repeats=repeats,
                                         random_state=SEED)
 
             for key, clf in models:
                 scores = {'f1':[], 'acc':[], 'roc_auc':[]}
-                for i, (train,test) in enumerate(rskf.split(x_data, y_data)):
+                for i, (train,test) in enumerate(rskf.split(x_data, y_data.argmax(axis=1))):
                     x_train, x_test = x_data[train], x_data[test]
                     y_train, y_test = y_data[train], y_data[test]
+
                     if key == 'cnn':
-                        x_train_cnn, x_test_cnn = x_data_cnn[train], x_data_cnn[test]
-                        clf.fit(x_train_cnn, y_train, epochs=100, batch_size=32, verbose=0)
-                        y_pred = (clf.predict(x_test_cnn, verbose=0) > 0.5).astype(int).flatten()
-                    else:
-                        clf.fit(x_train, y_train)
+                        x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
+                        x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
+                        clf.fit(x_train, y_train, epochs=10, verbose=0)
                         y_pred = clf.predict(x_test)
-                    _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
-                    _acc = metrics.accuracy_score(y_test, y_pred)
-                    if hasattr(clf, 'predict_proba'):
-                        y_proba = clf.predict_proba(x_test)
-                        _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted')
+                        y_pred_classes = y_pred.argmax(axis=1)
+                        y_test_classes = y_test.argmax(axis=1)
                     else:
-                        _roc_auc = 0.0  # Assuming no predict_proba for CNN
+                        clf.fit(x_train, y_train.argmax(axis=1))
+                        y_pred_classes = clf.predict(x_test)
+                        y_test_classes = y_test.argmax(axis=1)
+                        y_pred = clf.predict_proba(x_test)
+                    
+                    _f1 = metrics.f1_score(y_test_classes, y_pred_classes, average='weighted')
+                    _acc = metrics.accuracy_score(y_test_classes, y_pred_classes)
+                    _roc_auc = metrics.roc_auc_score(y_test_classes, y_pred, multi_class='ovr', average='weighted')
                     scores['f1'].append(_f1)
                     scores['acc'].append(_acc)
                     scores['roc_auc'].append(_roc_auc)
@@ -128,12 +132,16 @@ def main():
 
         yaml.dump(results, open(condition+'_lift_scores_'+output_file+'.yaml', 'w'))
 
+    # end of function
+    #-------------
+
     if args.mu:
         process_condition(args.mu, 'mu')
     if args.mw:
         process_condition(args.mw, 'mw')
     if args.mo:
         process_condition(args.mo, 'mo')
+
 
 if __name__ == "__main__":
     main()

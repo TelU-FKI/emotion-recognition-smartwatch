@@ -3,34 +3,19 @@ import yaml
 import numpy as np
 from collections import defaultdict
 
-from sklearn import linear_model
-from sklearn import metrics
-from sklearn import model_selection
-from sklearn import preprocessing
+from sklearn import linear_model, metrics, model_selection, preprocessing
 from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
 
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv1D, Flatten, Dropout
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.utils import to_categorical
+from keras.models import Sequential
+from keras.layers import SimpleRNN, Dense
+from keras.utils import to_categorical
 
 from permute.core import one_sample
 
 SEED = 1
 np.random.seed(SEED)
-
-def create_cnn_model(input_shape, num_classes):
-    model = Sequential()
-    model.add(Conv1D(64, kernel_size=3, activation='relu', input_shape=input_shape))
-    model.add(Conv1D(64, kernel_size=3, activation='relu'))
-    model.add(Flatten())
-    model.add(Dense(100, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(num_classes, activation='softmax'))
-    model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
-    return model
 
 def main():
     '''
@@ -52,25 +37,23 @@ def main():
     neutral = args.neutral
 
     def process_condition(fnames, condition):
-
-        if not fnames: 
+        if not fnames:
             return
         print('condition', condition)
 
         results = {'labels':[], 'baseline': defaultdict(list),
-                    'logit': defaultdict(list), 
-                    'rf': defaultdict(list),
-                    'cnn': defaultdict(list)}
+                   'logit': defaultdict(list), 
+                   'rf': defaultdict(list),
+                   'gb': defaultdict(list),
+                   'rnn': defaultdict(list)}
 
         for fname in fnames:
             print('classifying: %s' % fname)
             label = fname.split('/')[-1]
-
             data = np.loadtxt(fname, delimiter=',')
+            print(data.shape)
 
             if not neutral:
-                # delete neutral to see if we can distinguish between
-                # happy/sad
                 data = np.delete(data, np.where(data[:,-1]==0), axis=0)
 
             np.random.shuffle(data)
@@ -80,48 +63,32 @@ def main():
 
             # scaled
             x_data = preprocessing.scale(x_data)
-            num_classes = len(np.unique(y_data))
-            y_data = to_categorical(y_data, num_classes=num_classes)
 
             models = [
-                    ('baseline', DummyClassifier(strategy = 'most_frequent')),
-                    ('logit', linear_model.LogisticRegression(max_iter=1000)),
-                    ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
-                    ]
-
-            input_shape = (x_data.shape[1], 1)
-            cnn_model = create_cnn_model(input_shape, num_classes)
-            models.append(('cnn', cnn_model))
+                ('baseline', DummyClassifier(strategy = 'most_frequent')),
+                ('logit', linear_model.LogisticRegression(max_iter=1000)),
+                ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
+                ('gb', GradientBoostingClassifier(n_estimators=N_ESTIMATORS))
+            ]
 
             results['labels'].append(label)
-            repeats = 10
-            folds = 10
+            repeats = 2
+            folds = 2
             rskf = RepeatedStratifiedKFold(n_splits=folds, 
-                                        n_repeats=repeats,
-                                        random_state=SEED)
+                                           n_repeats=repeats,
+                                           random_state=SEED)
 
             for key, clf in models:
                 scores = {'f1':[], 'acc':[], 'roc_auc':[]}
-                for i, (train,test) in enumerate(rskf.split(x_data, y_data.argmax(axis=1))):
+                for i, (train, test) in enumerate(rskf.split(x_data, y_data)):
                     x_train, x_test = x_data[train], x_data[test]
                     y_train, y_test = y_data[train], y_data[test]
-
-                    if key == 'cnn':
-                        x_train = x_train.reshape((x_train.shape[0], x_train.shape[1], 1))
-                        x_test = x_test.reshape((x_test.shape[0], x_test.shape[1], 1))
-                        clf.fit(x_train, y_train, epochs=10, verbose=0)
-                        y_pred = clf.predict(x_test)
-                        y_pred_classes = y_pred.argmax(axis=1)
-                        y_test_classes = y_test.argmax(axis=1)
-                    else:
-                        clf.fit(x_train, y_train.argmax(axis=1))
-                        y_pred_classes = clf.predict(x_test)
-                        y_test_classes = y_test.argmax(axis=1)
-                        y_pred = clf.predict_proba(x_test)
-                    
-                    _f1 = metrics.f1_score(y_test_classes, y_pred_classes, average='weighted')
-                    _acc = metrics.accuracy_score(y_test_classes, y_pred_classes)
-                    _roc_auc = metrics.roc_auc_score(y_test_classes, y_pred, multi_class='ovr', average='weighted')
+                    clf.fit(x_train, y_train)
+                    y_pred = clf.predict(x_test)
+                    _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
+                    _acc = metrics.accuracy_score(y_test, y_pred)
+                    y_proba = clf.predict_proba(x_test)
+                    _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted')
                     scores['f1'].append(_f1)
                     scores['acc'].append(_acc)
                     scores['roc_auc'].append(_roc_auc)
@@ -130,10 +97,38 @@ def main():
                 results[key]['acc'].append(np.mean(scores['acc']))
                 results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
 
-        yaml.dump(results, open(condition+'_lift_scores_'+output_file+'.yaml', 'w'))
+            # RNN Model
+            scores_rnn = {'f1':[], 'acc':[], 'roc_auc':[]}
+            y_data_categorical = to_categorical(y_data)
+            for train, test in rskf.split(x_data, y_data):
+                x_train, x_test = x_data[train], x_data[test]
+                y_train, y_test = y_data_categorical[train], y_data[test]
+                
+                x_train_rnn = np.reshape(x_train, (x_train.shape[0], 1, x_train.shape[1]))
+                x_test_rnn = np.reshape(x_test, (x_test.shape[0], 1, x_test.shape[1]))
 
-    # end of function
-    #-------------
+                model = Sequential()
+                model.add(SimpleRNN(50, activation='relu', input_shape=(1, x_train.shape[1])))
+                model.add(Dense(y_data_categorical.shape[1], activation='softmax'))
+                model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+                model.fit(x_train_rnn, y_train, epochs=10, verbose=0)
+                y_pred = model.predict(x_test_rnn, verbose=0)
+                y_pred_classes = np.argmax(y_pred, axis=1)
+                
+                _f1 = metrics.f1_score(y_test, y_pred_classes, average='weighted')
+                _acc = metrics.accuracy_score(y_test, y_pred_classes)
+                _roc_auc = metrics.roc_auc_score(y_test, y_pred[:, 1], average='weighted')
+                scores_rnn['f1'].append(_f1)
+                scores_rnn['acc'].append(_acc)
+                scores_rnn['roc_auc'].append(_roc_auc)
+                print('RNN: ', _f1, _acc, _roc_auc)
+
+            results['rnn']['f1'].append(np.mean(scores_rnn['f1']))
+            results['rnn']['acc'].append(np.mean(scores_rnn['acc']))
+            results['rnn']['roc_auc'].append(np.mean(scores_rnn['roc_auc']))
+
+        yaml.dump(results, open(condition+'_lift_scores_'+output_file+'.yaml', 'w'))
 
     if args.mu:
         process_condition(args.mu, 'mu')
@@ -141,7 +136,6 @@ def main():
         process_condition(args.mw, 'mw')
     if args.mo:
         process_condition(args.mo, 'mo')
-
 
 if __name__ == "__main__":
     main()

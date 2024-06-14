@@ -7,21 +7,29 @@ def permute(results):
     baseline = np.array(results['baseline']['acc'])
     logit = np.array(results['logit']['acc'])
     rf = np.array(results['rf']['acc'])
-    cnn = np.array(results['cnn']['acc'])  # Add 'cnn' to the dictionary 'results'
+    gb = np.array(results['gb']['acc'])  # Add 'gb' to the dictionary 'results'
+    nb = np.array(results['nb']['acc'])  # Add 'nb' to the dictionary 'results'
+    adaboost = np.array(results['adaboost']['acc'])  # Add 'adaboost' to the dictionary 'results'
 
     baseline_f1 = np.array(results['baseline']['f1'])
     logit_f1 = np.array(results['logit']['f1'])
     rf_f1 = np.array(results['rf']['f1'])
-    cnn_f1 = np.array(results['cnn']['f1'])  # Add 'cnn' to the dictionary 'results'
+    gb_f1 = np.array(results['gb']['f1'])  # Add 'gb' to the dictionary 'results'
+    nb_f1 = np.array(results['nb']['f1'])  # Add 'nb' to the dictionary 'results'
+    adaboost_f1 = np.array(results['adaboost']['f1'])  # Add 'adaboost' to the dictionary 'results'
 
     baseline_roc = np.array(results['baseline']['roc_auc'])
     logit_roc = np.array(results['logit']['roc_auc'])
     rf_roc = np.array(results['rf']['roc_auc'])
-    cnn_roc = np.array(results['cnn']['roc_auc'])  # Add 'cnn' to the dictionary 'results'
+    gb_roc = np.array(results['gb']['roc_auc'])  # Add 'gb' to the dictionary 'results'
+    nb_roc = np.array(results['nb']['roc_auc'])  # Add 'nb' to the dictionary 'results'
+    adaboost_roc = np.array(results['adaboost']['roc_auc'])  # Add 'adaboost' to the dictionary 'results'
 
     logit_lift = logit - baseline
     rf_lift = rf - baseline
-    cnn_lift = cnn - baseline  # Calculate lift for 'cnn'
+    gb_lift = gb - baseline  # Calculate lift for 'gb'
+    nb_lift = nb - baseline  # Calculate lift for 'nb'
+    adaboost_lift = adaboost - baseline  # Calculate lift for 'adaboost'
 
     print('model\t\tAUC\t\tF1\t\tmean\t\tdiff\tp-value')
     print(('baseline\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})'.format(
@@ -43,11 +51,25 @@ def permute(results):
             acc=rf.mean(), acc_std=rf.std(),
             diff=diff_means, p=p)))
     
-    (p, diff_means) = one_sample(cnn_lift, stat='mean')  # Calculate p-value and difference for 'cnn'
-    print(('CNN\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
-            roc=cnn_roc.mean(), roc_std=cnn_roc.std(),
-            f1=cnn_f1.mean(), f1_std=cnn_f1.std(),
-            acc=cnn.mean(), acc_std=cnn.std(),
+    (p, diff_means) = one_sample(gb_lift, stat='mean')  # Calculate p-value and difference for 'gb'
+    print(('gb\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
+            roc=gb_roc.mean(), roc_std=gb_roc.std(),
+            f1=gb_f1.mean(), f1_std=gb_f1.std(),
+            acc=gb.mean(), acc_std=gb.std(),
+            diff=diff_means, p=p)))
+
+    (p, diff_means) = one_sample(nb_lift, stat='mean')  # Calculate p-value and difference for 'nb'
+    print(('nb\t\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
+            roc=nb_roc.mean(), roc_std=nb_roc.std(),
+            f1=nb_f1.mean(), f1_std=nb_f1.std(),
+            acc=nb.mean(), acc_std=nb.std(),
+            diff=diff_means, p=p)))
+
+    (p, diff_means) = one_sample(adaboost_lift, stat='mean')  # Calculate p-value and difference for 'adaboost'
+    print(('adaboost\t{roc:.3f} ({roc_std:.3f})\t{f1:.3f} ({f1_std:.3f})\t{acc:.3f} ({acc_std:.3f})\t{diff:.3f}\t{p:.3f}'.format(
+            roc=adaboost_roc.mean(), roc_std=adaboost_roc.std(),
+            f1=adaboost_f1.mean(), f1_std=adaboost_f1.std(),
+            acc=adaboost.mean(), acc_std=adaboost.std(),
             diff=diff_means, p=p)))
 
     # apa itu std? apa itu p-value? apa itu diff? 

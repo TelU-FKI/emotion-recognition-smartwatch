@@ -8,9 +8,9 @@ from sklearn import metrics
 from sklearn import model_selection
 from sklearn import preprocessing
 from sklearn.dummy import DummyClassifier
-from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier, GradientBoostingClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.model_selection import RepeatedStratifiedKFold
-import lightgbm as lgb
+from sklearn.neural_network import MLPClassifier
 
 from permute.core import one_sample
 
@@ -45,9 +45,8 @@ def main():
         results = {'labels':[], 'baseline': defaultdict(list),
                     'logit': defaultdict(list), 
                     'rf': defaultdict(list),
-                    'adaboost': defaultdict(list),
                     'gb': defaultdict(list),
-                    'lgb': defaultdict(list)}
+                    'mlp': defaultdict(list)}
 
         for fname in fnames:
             print('classifying: %s' % fname)
@@ -77,16 +76,16 @@ def main():
 
             models = [
                     ('baseline', DummyClassifier(strategy = 'most_frequent')),
+                    #('logit', linear_model.LogisticRegressionCV(Cs=20, cv=10)),
                     ('logit', linear_model.LogisticRegression(max_iter=1000)),
                     ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
-                    ('adaboost', AdaBoostClassifier(n_estimators=N_ESTIMATORS, random_state=SEED)),
-                    ('gb', GradientBoostingClassifier(n_estimators=N_ESTIMATORS, random_state=SEED)),
-                    ('lgb', lgb.LGBMClassifier(n_estimators=N_ESTIMATORS, random_state=SEED))
+                    ('gb', GradientBoostingClassifier(n_estimators=N_ESTIMATORS)),
+                    ('mlp', MLPClassifier(hidden_layer_sizes=(100,), max_iter=1000, random_state=SEED))
                     ]
                     
             results['labels'].append(label)
-            repeats = 10
-            folds = 10
+            repeats = 2
+            folds = 2
             rskf = RepeatedStratifiedKFold(n_splits=folds, 
                                         n_repeats=repeats,
                                         random_state=SEED)
@@ -106,9 +105,14 @@ def main():
                     scores['acc'].append(_acc)
                     scores['roc_auc'].append(_roc_auc)
 
+                #results[key] = {'f1': np.mean(scores['f1']), 'acc': np.mean(scores['acc']), 'f1_all': scores['f1'], 'acc_all':scores['acc']}
                 results[key]['f1'].append(np.mean(scores['f1']))
                 results[key]['acc'].append(np.mean(scores['acc']))
                 results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+
+        #for key, model in models:
+        #    print key, np.mean(results[key]), np.std(results[key])
+            print('results', results)
 
         yaml.dump(results, open(condition+'_lift_scores_'+output_file+'.yaml', 'w'))
 

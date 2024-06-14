@@ -79,9 +79,9 @@ def main():
                     ('baseline', DummyClassifier(strategy = 'most_frequent')),
                     ('logit', linear_model.LogisticRegression(max_iter=1000)),
                     ('rf', RandomForestClassifier(n_estimators = N_ESTIMATORS)),
-                    ('adaboost', AdaBoostClassifier(n_estimators=N_ESTIMATORS, random_state=SEED)),
-                    ('gb', GradientBoostingClassifier(n_estimators=N_ESTIMATORS, random_state=SEED)),
-                    ('lgb', lgb.LGBMClassifier(n_estimators=N_ESTIMATORS, random_state=SEED))
+                    ('adaboost', AdaBoostClassifier(n_estimators=N_ESTIMATORS, algorithm='SAMME')),
+                    ('gb', GradientBoostingClassifier(n_estimators=N_ESTIMATORS)),
+                    ('lgb', lgb.LGBMClassifier(n_estimators=N_ESTIMATORS, verbose=-1))
                     ]
                     
             results['labels'].append(label)

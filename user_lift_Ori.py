@@ -100,15 +100,25 @@ def main():
                     y_pred = clf.predict(x_test)
                     _f1 = metrics.f1_score(y_test, y_pred, average='weighted')
                     _acc = metrics.accuracy_score(y_test, y_pred)
-                    y_proba = clf.predict_proba(x_test)
-                    _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted')
+                    if hasattr(clf, 'predict_proba'):
+                        y_proba = clf.predict_proba(x_test)
+                        if len(np.unique(y_test)) > 2:  # Multi-class scenario
+                            _roc_auc = metrics.roc_auc_score(y_test, y_proba, average='weighted', multi_class='ovr')
+                        else:  # Binary classification
+                            _roc_auc = metrics.roc_auc_score(y_test, y_proba[:, 1], average='weighted', multi_class='ovr')
+                        if not np.isnan(_roc_auc):
+                            scores['roc_auc'].append(_roc_auc)
+                    else:
+                            _roc_auc = None
                     scores['f1'].append(_f1)
                     scores['acc'].append(_acc)
-                    scores['roc_auc'].append(_roc_auc)
 
                 results[key]['f1'].append(np.mean(scores['f1']))
                 results[key]['acc'].append(np.mean(scores['acc']))
-                results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+                if scores['roc_auc']:  # Check if the list is not empty
+                    results[key]['roc_auc'].append(np.mean(scores['roc_auc']))
+                else:
+                    results[key]['roc_auc'].append(None)
 
         yaml.dump(results, open(condition+'_lift_scores_'+output_file+'.yaml', 'w'))
 

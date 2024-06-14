@@ -54,7 +54,7 @@ python user_lift.py -mo features/features_mo_ew* -mu features/features_mu_ew* -m
 
 Compute classification accuracies of happy vs sad vs neutral.
 ```bash
-python2 user_lift.py -mo features/features_mo_ew* -mu features/features_mu_ew* -mw features/features_mw_ew* -o neutral --neutral
+python2 user_lift.py -mo features/features_mo_ew* -mu features/features_mu_ew* -mw features/features_mw_ew* -o neutral_new --neutral
 ```
 
 Run permutation test to determine if accuracies are higher than baseline.

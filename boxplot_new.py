@@ -48,7 +48,7 @@ def main():
 
     titles = ['Movie', 'Music', 'Music while walking']
     labels = ['Baseline', 'RF', 'LR', 'Adaboost', 'GB', 'LightGBM']
-    colors = ['#FFCCCC', '#CCFFCC', '#CCCCFF', '#FFFFCC', '#FFCCFF', '#CCFFFF']
+    colors = ['#dbdbdb', '#cce5ff', '#ffcccc', '#fff8ab', '#bbffbc', '#f9c3fb']
 
     share = None
     for i, (group, title) in enumerate(zip(data, titles)):
@@ -77,12 +77,12 @@ def main():
 
     
     # for h vs s
-    plt.suptitle('Distribution of Accuracies of Personal Models Per Condition\nHappy vs Sad', fontsize=14)
-    plt.ylim(0.45, 1)
+    # plt.suptitle('Distribution of Accuracies of Personal Models Per Condition\nHappy vs Sad', fontsize=14)
+    # plt.ylim(0.45, 1)
 
     # # for s-n-h
-    # plt.suptitle('Distribution of Accuracies of Personal Models Per Condition\nHappy - Neutral - Sad', fontsize=14)
-    # plt.ylim(0.3, 1)
+    plt.suptitle('Distribution of Accuracies of Personal Models Per Condition\nHappy - Neutral - Sad', fontsize=14)
+    plt.ylim(0.3, 1)
 
     # for emotion cv
     #plt.suptitle('Emotion Cross-Validation of Happy vs Sad', fontsize=14)

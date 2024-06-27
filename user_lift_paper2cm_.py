@@ -85,8 +85,8 @@ def main():
                     ]
                     
             results['labels'].append(label)
-            repeats = 2
-            folds = 2
+            repeats = 10
+            folds = 10
             rskf = RepeatedStratifiedKFold(n_splits=folds, 
                                         n_repeats=repeats,
                                         random_state=SEED)

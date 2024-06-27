@@ -1,0 +1,1283 @@
+baseline: !!python/object/apply:collections.defaultdict
+  args:
+  - &id004 !!python/name:builtins.list ''
+  dictitems:
+    acc:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - &id001 !!python/object/apply:numpy.dtype
+        args:
+        - f8
+        - false
+        - true
+        state: !!python/tuple
+        - 3
+        - <
+        - null
+        - null
+        - null
+        - -1
+        - -1
+        - 0
+      - !!binary |
+        aPk/l+mA1T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        37fKU/e91T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        LPPL//0J1j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        16gmKd3q2D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        HWDZ5ssB1j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        0bkQj4Sa1T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        F0hQ/Bhz1z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        VVVVVVVV1T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        G2Rzx5UE1j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        dNFFF1101T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        6m8bAGPK1T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        SS9/2kID1j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        3UXcDBGg1j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        H7GQtvYM1z8=
+    conf_matrix:
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - &id002 !!python/name:numpy.ndarray ''
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - &id003 !!python/object/apply:numpy.dtype
+        args:
+        - i8
+        - false
+        - true
+        state: !!python/tuple
+        - 3
+        - <
+        - null
+        - null
+        - null
+        - -1
+        - -1
+        - 0
+      - false
+      - !!binary |
+        SgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgMAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAAAAAAAAACIAwAAAAAAAAAAAAAAAAAAAAAAAAAAAACaAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4
+        AwAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        LAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/gIAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAAAAAAAAAAAAAAAAAAAAKwCAAAAAAAAAAAAAAAAAAAAAAAAAAAAANwDAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAACoEAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAAAAAAAAAAAAAAAAAAAAOYCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPICAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAABADAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        6gIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4gIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1gIAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAAAAAAAAAAAAAAAAAAAAEIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO4CAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAJQDAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        DAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAMAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAAAAAAAAAAAAAAAAAAAAIADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4DAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAJoDAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        OgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAANgMAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        OgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAMAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        sAEAAAAAAACyAQAAAAAAAAAAAAAAAAAAsgEAAAAAAACwAQAAAAAAAAAAAAAAAAAAhgEAAAAAAACG
+        AQAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        pgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAMAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAAAAAAAAAAAAAAAAAAAAJoDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJoDAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAA4EAAAAAAAA
+    f1:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        hoItvMyhxT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        FmlixJENxj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        UaJvl9KUxj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        MtBDEzvuyz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        n8JI8C6Gxj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        eEE9TujOxT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Gm3Bb+smyT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        VVVVVVVVxT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        mL08Vi2Lxj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        i/el58CLxT8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        fCx+p5Yjxj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        lGTvUsyIxj8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AG0Emzijxz8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        H1qbpDRqyD8=
+    roc_auc:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA4D8=
+labels:
+- features_mw_ew13_accdata_31_1_177-1722.csv
+- features_mw_ew14_accdata_1_2_1112-1128.csv
+- features_mw_ew19_accdata_7_2_1110-1125.csv
+- features_mw_ew20_accdata_7_2_1713-1732.csv
+- features_mw_ew25_accdata_10_2_178-1722.csv
+- features_mw_ew26_accdata_13_2_1113-1127.csv
+- features_mw_ew31_accdata_16_2_1515-1531.csv
+- features_mw_ew37_accdata_20_2_165-1619.csv
+- features_mw_ew38_accdata_20_2_1726-1741.csv
+- features_mw_ew43_accdata_22_2_1711-1725.csv
+- features_mw_ew44_accdata_23_2_1123-1139.csv
+- features_mw_ew49_accdata_28_2_1130-1149.csv
+- features_mw_ew7_accdata_26_1_015-032.csv
+- features_mw_ew8_accdata_27_1_1319-1336.csv
+logit: !!python/object/apply:collections.defaultdict
+  args:
+  - *id004
+  dictitems:
+    acc:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        JHNv5ol36z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Sk+HbbZH5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Iw3EQjTD5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        gA4bHPzL5T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        gJpk0Pin4T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        jSXvD13V5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        xLEubqMB5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        4yqu4iqu6j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        YC+ef9c63T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        oosuuuii5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Fgzl499s7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AAAAAAAA5j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        UgwOZ0fM4j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        x6abRVKp5z8=
+    conf_matrix:
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        5AIAAAAAAAA6AAAAAAAAACwAAAAAAAAANAAAAAAAAAC9AgAAAAAAAFEAAAAAAAAAHwAAAAAAAABZ
+        AAAAAAAAAMYCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        MwIAAAAAAACbAAAAAAAAALoAAAAAAAAAmQAAAAAAAAAxAgAAAAAAANAAAAAAAAAAcAAAAAAAAAC0
+        AAAAAAAAAFQCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAMAAAAAAAATAAAAAAAAABkAAAAAAAAAGgAAAAAAAADsAQAAAAAAAAYBAAAAAAAAFQAAAAAAAAD+
+        AAAAAAAAAOsBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        qwEAAAAAAACtAAAAAAAAAFQAAAAAAAAAtwAAAAAAAABEAgAAAAAAAOEAAAAAAAAAQAAAAAAAAACQ
+        AAAAAAAAAFoDAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        /QEAAAAAAABuAAAAAAAAAHsAAAAAAAAAjwAAAAAAAABpAQAAAAAAAPoAAAAAAAAAhwAAAAAAAAAF
+        AQAAAAAAAIQBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        WwIAAAAAAABzAAAAAAAAABwAAAAAAAAAegAAAAAAAADvAQAAAAAAAHkAAAAAAAAAPgAAAAAAAAB0
+        AAAAAAAAACQCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        1AEAAAAAAABsAAAAAAAAAAIBAAAAAAAAPwAAAAAAAABNAgAAAAAAAGIAAAAAAAAA/AAAAAAAAACe
+        AAAAAAAAAPoBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        5wIAAAAAAAARAAAAAAAAABQAAAAAAAAABgAAAAAAAABUAgAAAAAAALIAAAAAAAAADAAAAAAAAACc
+        AAAAAAAAAGQCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        qgEAAAAAAAAQAQAAAAAAAMYAAAAAAAAAIQEAAAAAAABDAQAAAAAAAPoAAAAAAAAA+QAAAAAAAADG
+        AAAAAAAAANsBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        CgIAAAAAAAC/AAAAAAAAAHEAAAAAAAAArwAAAAAAAADVAQAAAAAAAKwAAAAAAAAAcwAAAAAAAABt
+        AAAAAAAAAFYCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        AAMAAAAAAAAwAAAAAAAAAAoAAAAAAAAANwAAAAAAAACUAgAAAAAAAFUAAAAAAAAACQAAAAAAAABA
+        AAAAAAAAANcCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        vAIAAAAAAABYAAAAAAAAAE4AAAAAAAAAYgAAAAAAAAAgAgAAAAAAAOAAAAAAAAAAVAAAAAAAAADV
+        AAAAAAAAAOMBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        HQIAAAAAAADlAAAAAAAAAKQAAAAAAAAAsgAAAAAAAAA/AgAAAAAAAI8AAAAAAAAAvwAAAAAAAAC5
+        AAAAAAAAALQBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        zAIAAAAAAACBAAAAAAAAAE0AAAAAAAAAhQAAAAAAAABjAgAAAAAAALIAAAAAAAAASwAAAAAAAACf
+        AAAAAAAAACQDAAAAAAAA
+    f1:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        SVHD1oZ46z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        6jFIHBBI5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        mjVH3W6+5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        MNIRpR615T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        MBOIXg2b4T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        4QQJMzPR5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ylGLDejl4z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        qNugB8a06j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        kK0PZmAm3T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        dctFuAuW5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        A6JYTLJp7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7zA2ofH65T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        cRRYY/zE4j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Ni1VRdOk5z8=
+    roc_auc:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        vlKnbYlx7j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        UimvaK2I6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        XbPdvRp+7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        1rN32sV46j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        v+H/CGqz5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        cBvmQDqK7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        5QFdEZmb6D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        CMwu0VkL7j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        aEWiguWJ5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ZLLe2pCd6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        lC3z5Eze7j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        L1APrsTJ6j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        9IOPu5t16D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        1OpWyx+M7D8=
+rf: !!python/object/apply:collections.defaultdict
+  args:
+  - *id004
+  dictitems:
+    acc:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        gVRj9/007D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        ZAtMdWH35T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        8rUUVffA6D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        kq+MtPTP6D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        JYPGP00y5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        gV5iIidT6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        uR6F61G45j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        pEEapEEa7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        BohSLFpW4T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        DuwdUwN75z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Oq2cnf1A7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        YEkvf9pC6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        7rhcaWiV5T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        cNV52zhi5z8=
+    conf_matrix:
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        6QIAAAAAAAArAAAAAAAAADYAAAAAAAAAKQAAAAAAAAC/AgAAAAAAAFoAAAAAAAAADgAAAAAAAAA3
+        AAAAAAAAAPkCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        MQIAAAAAAACnAAAAAAAAALAAAAAAAAAAegAAAAAAAABlAgAAAAAAALsAAAAAAAAAPAAAAAAAAACL
+        AAAAAAAAALECAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        /wIAAAAAAAAXAAAAAAAAABYAAAAAAAAAFQAAAAAAAAAtAgAAAAAAAMoAAAAAAAAADAAAAAAAAAD+
+        AAAAAAAAAPQBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        qQEAAAAAAADHAAAAAAAAADwAAAAAAAAAdAAAAAAAAADoAgAAAAAAAIAAAAAAAAAAJgAAAAAAAABK
+        AAAAAAAAALoDAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        NgIAAAAAAAApAAAAAAAAAIcAAAAAAAAAjAAAAAAAAACWAQAAAAAAANAAAAAAAAAAYwAAAAAAAADa
+        AAAAAAAAANMBAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        OQIAAAAAAABpAAAAAAAAAEgAAAAAAAAAXgAAAAAAAAAmAgAAAAAAAF4AAAAAAAAAHAAAAAAAAABE
+        AAAAAAAAAHYCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        EQIAAAAAAAA8AAAAAAAAAPUAAAAAAAAAPQAAAAAAAABTAgAAAAAAAF4AAAAAAAAArgAAAAAAAABb
+        AAAAAAAAAIsCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        +gIAAAAAAAAEAAAAAAAAAA4AAAAAAAAABAAAAAAAAAB/AgAAAAAAAIkAAAAAAAAACgAAAAAAAAB0
+        AAAAAAAAAI4CAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        LgIAAAAAAAC5AAAAAAAAAJkAAAAAAAAAKwEAAAAAAAB/AQAAAAAAALQAAAAAAAAA8QAAAAAAAACq
+        AAAAAAAAAP8BAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        gwIAAAAAAABmAAAAAAAAAFEAAAAAAAAAowAAAAAAAAAjAgAAAAAAAGoAAAAAAAAAZAAAAAAAAABo
+        AAAAAAAAAGoCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        CwMAAAAAAAApAAAAAAAAAAYAAAAAAAAAPgAAAAAAAACJAgAAAAAAAFkAAAAAAAAACgAAAAAAAABM
+        AAAAAAAAAMoCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        PwMAAAAAAAAeAAAAAAAAAAUAAAAAAAAATgAAAAAAAABXAgAAAAAAAL0AAAAAAAAAKAAAAAAAAAC7
+        AAAAAAAAACkCAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        gQIAAAAAAAC3AAAAAAAAAG4AAAAAAAAAagAAAAAAAAB1AgAAAAAAAKEAAAAAAAAAiwAAAAAAAACh
+        AAAAAAAAAAACAAAAAAAA
+    - !!python/object/apply:numpy.core.multiarray._reconstruct
+      args:
+      - *id002
+      - !!python/tuple
+        - 0
+      - !!binary |
+        Yg==
+      state: !!python/tuple
+      - 1
+      - !!python/tuple
+        - 3
+        - 3
+      - *id003
+      - false
+      - !!binary |
+        hQIAAAAAAACTAAAAAAAAAIIAAAAAAAAAhwAAAAAAAABtAgAAAAAAAKYAAAAAAAAAOAAAAAAAAACO
+        AAAAAAAAAEgDAAAAAAAA
+    f1:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        9KomQoo27D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        XuhfUofx5T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        QAuNqCfH6D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        S17uVMe36D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        5+ax+swe5D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        wWc9nEhM6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        AvnSdTq25j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        IKkaEm0b7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        TLDBkO5F4T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        MtBdbEd15z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        hV5uk4c67D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        dGNqyG8n6T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        w55k7yyV5T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        mloZ6pxb5z8=
+    roc_auc:
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        LG8loC097z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        y+jcRkam6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        cRbqQYxt7T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        z/tRYTKg7T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        VnG6/SEW6j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        5tlkQADV7T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        KP2Hy0rX6z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        BQaFnIrO7j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        LDENg/5s5z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        qPHcHzRE7D8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        aGJhgH8t7z8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        Pm42uC537T8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        4EOP5Pj16j8=
+    - !!python/object/apply:numpy.core.multiarray.scalar
+      - *id001
+      - !!binary |
+        6N4x6cap7D8=

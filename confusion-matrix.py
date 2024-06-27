@@ -4,7 +4,7 @@ import numpy as np
 from permute.core import one_sample
 
 def permute(results):
-    models = ['baseline', 'logit', 'rf']
+    models = ['baseline', 'logit', 'rf', 'adaboost', 'gb', 'lgb']
 
     for model in models:
         print(f"Model: {model}")

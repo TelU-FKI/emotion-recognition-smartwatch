@@ -1,7 +1,6 @@
 import argparse
 import yaml
 import numpy as np
-from permute.core import one_sample
 
 def permute(results):
     models = ['baseline', 'logit', 'rf', 'adaboost', 'gb', 'lgb']

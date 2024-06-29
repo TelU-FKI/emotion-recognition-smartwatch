@@ -1,0 +1,36 @@
+Confusion Matrix: baseline
+          Happy      Neutral    Sad       
+Happy     68970      47690      63110     
+Neutral   66720      48660      64050     
+Sad       64880      47120      67600     
+
+Confusion Matrix: logit
+          Happy      Neutral    Sad       
+Happy     121832     33067      24871     
+Neutral   34540      107628     37262     
+Sad       24697      35186      119717    
+
+Confusion Matrix: rf
+          Happy      Neutral    Sad       
+Happy     136496     24009      19265     
+Neutral   27362      124240     27828     
+Sad       19869      26184      133547    
+
+Confusion Matrix: adaboost
+          Happy      Neutral    Sad       
+Happy     121161     34213      24396     
+Neutral   33134      107791     38505     
+Sad       23001      35165      121434    
+
+Confusion Matrix: gb
+          Happy      Neutral    Sad       
+Happy     140234     22415      17121     
+Neutral   23561      131979     23890     
+Sad       17342      23220      139038    
+
+Confusion Matrix: lgb
+          Happy      Neutral    Sad       
+Happy     147141     18330      14299     
+Neutral   19746      139813     19871     
+Sad       14538      18870      146192    
+

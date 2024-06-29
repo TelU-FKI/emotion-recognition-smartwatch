@@ -1,0 +1,30 @@
+Confusion Matrix: baseline
+          Happy      Sad       
+Happy     98310      81460     
+Sad       93320      86280     
+
+Confusion Matrix: logit
+          Happy      Sad       
+Happy     144926     34844     
+Sad       34629      144971    
+
+Confusion Matrix: rf
+          Happy      Sad       
+Happy     154278     25492     
+Sad       28022      151578    
+
+Confusion Matrix: adaboost
+          Happy      Sad       
+Happy     150618     29152     
+Sad       28902      150698    
+
+Confusion Matrix: gb
+          Happy      Sad       
+Happy     157361     22409     
+Sad       23416      156184    
+
+Confusion Matrix: lgb
+          Happy      Sad       
+Happy     160265     19505     
+Sad       20255      159345    
+

@@ -1,0 +1,74 @@
+Model          Condition           True/Predicted      Happy      Neutral    Sad       
+================================================================================
+baseline       Movie               Happy               25890      21370      18130     
+baseline       Movie               Neutral             24400      21680      18060     
+baseline       Movie               Sad                 23500      21270      18560     
+
+baseline       Music               Happy               11240      20480      24590     
+baseline       Music               Neutral             11060      21080      24610     
+baseline       Music               Sad                 10970      20240      25410     
+
+baseline       Music+Walk          Happy               31840      5840       20390     
+baseline       Music+Walk          Neutral             31260      5900       21380     
+baseline       Music+Walk          Sad                 30410      5610       23630     
+
+logit          Movie               Happy               45218      12364      7808      
+logit          Movie               Neutral             13769      36178      14193     
+logit          Movie               Sad                 8329       12942      42059     
+
+logit          Music               Happy               33260      12570      10480     
+logit          Music               Neutral             13179      31990      11581     
+logit          Music               Sad                 9902       11258      35460     
+
+logit          Music+Walk          Happy               43354      8133       6583      
+logit          Music+Walk          Neutral             7592       39460      11488     
+logit          Music+Walk          Sad                 6466       10986      42198     
+
+rf             Movie               Happy               50361      8922       6107      
+rf             Movie               Neutral             11407      42713      10020     
+rf             Movie               Sad                 7062       8945       47323     
+
+rf             Music               Happy               39107      9138       8065      
+rf             Music               Neutral             9876       37894      8980      
+rf             Music               Sad                 8367       9034       39219     
+
+rf             Music+Walk          Happy               47028      5949       5093      
+rf             Music+Walk          Neutral             6079       43633      8828      
+rf             Music+Walk          Sad                 4440       8205       47005     
+
+adaboost       Movie               Happy               44648      13384      7358      
+adaboost       Movie               Neutral             13541      37303      13296     
+adaboost       Movie               Sad                 7552       13290      42488     
+
+adaboost       Music               Happy               33862      12631      9817      
+adaboost       Music               Neutral             12093      33955      10702     
+adaboost       Music               Sad                 9460       10940      36220     
+
+adaboost       Music+Walk          Happy               42651      8198       7221      
+adaboost       Music+Walk          Neutral             7500       36533      14507     
+adaboost       Music+Walk          Sad                 5989       10935      42726     
+
+gb             Movie               Happy               52073      8132       5185      
+gb             Movie               Neutral             9588       45868      8684      
+gb             Movie               Sad                 5842       8134       49354     
+
+gb             Music               Happy               39829      9047       7434      
+gb             Music               Neutral             8856       40093      7801      
+gb             Music               Sad                 7206       7656       41758     
+
+gb             Music+Walk          Happy               48332      5236       4502      
+gb             Music+Walk          Neutral             5117       46018      7405      
+gb             Music+Walk          Sad                 4294       7430       47926     
+
+lgb            Movie               Happy               54482      6568       4340      
+lgb            Movie               Neutral             7911       49286      6943      
+lgb            Movie               Sad                 5041       6391       51898     
+
+lgb            Music               Happy               42453      7464       6393      
+lgb            Music               Neutral             7553       42560      6637      
+lgb            Music               Sad                 5945       6300       44375     
+
+lgb            Music+Walk          Happy               50206      4298       3566      
+lgb            Music+Walk          Neutral             4282       47967      6291      
+lgb            Music+Walk          Sad                 3552       6179       49919     
+

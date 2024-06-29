@@ -5,3 +5,4 @@ permute
 scikit_learn
 PyYAML
 lightgbm
+seaborn

@@ -55,7 +55,7 @@ def main():
     parser.add_argument("-mo", type=str, help="movie yaml")
     parser.add_argument("-mu", type=str, help="music yaml")
     parser.add_argument("-mw", type=str, help="music+walk yaml")
-    parser.add_argument("-o", "--output_file", type=str, help="file name for saving the generated plot.", default="output3")
+    parser.add_argument("-o", "--output_file", type=str, help="file name for saving the generated plot.")
     parser.add_argument("-r", "--dpi", type=int, help="resolution of image", default = 300)
 
     # set variables based on arguments passed
@@ -133,7 +133,11 @@ def main():
     plt.subplots_adjust(wspace=1.)
     plt.tight_layout()
     plt.subplots_adjust(top=0.92)
-    plt.savefig(output_file + '.png', bbox_inches='tight')
+    
+    if output_file:
+        plt.savefig(output_file + '.png', bbox_inches='tight')
+    else:
+        plt.show()
 
 
 if __name__ == "__main__":
